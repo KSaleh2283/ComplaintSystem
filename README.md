@@ -9,3 +9,5 @@ The technology I used to build the project is :
 7) ajax.
 8) token based authentication.
 9) authorization
+10) please download the ComplaintSystemDB and restore it in the Microsoft sql server management studio.
+11) check the connection string in all projects
