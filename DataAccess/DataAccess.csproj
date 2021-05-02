@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{205DE3EE-80AE-4269-9BEA-B355B4D2B553}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataAccess</RootNamespace>
+    <AssemblyName>DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Context\ComplaintContext.cs" />
+    <Compile Include="Entity\Complaint.cs" />
+    <Compile Include="Entity\ComplaintStatus.cs" />
+    <Compile Include="Entity\ComplaintType.cs" />
+    <Compile Include="Entity\Profile.cs" />
+    <Compile Include="Entity\ProfileType.cs" />
+    <Compile Include="GenericRepository\Generic.cs" />
+    <Compile Include="GenericRepository\IGeneric.cs" />
+    <Compile Include="Migrations\202104301950518_firstM.cs" />
+    <Compile Include="Migrations\202104301950518_firstM.Designer.cs">
+      <DependentUpon>202104301950518_firstM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104302217161_firstM1.cs" />
+    <Compile Include="Migrations\202104302217161_firstM1.Designer.cs">
+      <DependentUpon>202104302217161_firstM1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105012123367_firstM11.cs" />
+    <Compile Include="Migrations\202105012123367_firstM11.Designer.cs">
+      <DependentUpon>202105012123367_firstM11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105021231263_firstM12.cs" />
+    <Compile Include="Migrations\202105021231263_firstM12.Designer.cs">
+      <DependentUpon>202105021231263_firstM12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105021504369_firstM13.cs" />
+    <Compile Include="Migrations\202105021504369_firstM13.Designer.cs">
+      <DependentUpon>202105021504369_firstM13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations\UserNameValidation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202104301950518_firstM.resx">
+      <DependentUpon>202104301950518_firstM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104302217161_firstM1.resx">
+      <DependentUpon>202104302217161_firstM1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105012123367_firstM11.resx">
+      <DependentUpon>202105012123367_firstM11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105021231263_firstM12.resx">
+      <DependentUpon>202105021231263_firstM12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105021504369_firstM13.resx">
+      <DependentUpon>202105021504369_firstM13.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

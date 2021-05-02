@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:50893/api/ProfileTypeApi/LoadProfileType',
+                dataType: 'JSON',
+                success: function (response) {
+
+                    $.each(response, function (key, value) {
+                        $("#ProfileTypes").append(`<option value="${value.ID}">${value.Name}</option>`);
+                    });
+                }
+            });
+
+            $("#SubmitForm").submit(function (event) {
+
+                event.preventDefault();
+                data = {
+                    'UserName': $("#UserName").val(),
+                    'Password': $("#Password").val(),
+                    'ConfirmPassword': $("#ConfirmPassword").val(),
+                    'ProfileTypeID': $("#ProfileTypes").val()
+                }
+                $.ajax({
+
+                    type: 'post',
+                    url: 'http://localhost:50893/api/ProfileApi/SaveProfile',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function () {
+
+                        $("#SuccessfullyRegisterAlert").css("display", "block");
+                        $("#FaildRegisterAlert").css("display", "none");
+                    },
+                    error: function (jqXHR) {
+                        $("#FaildRegisterAlert").css("display", "block");
+                        $("#SuccessfullyRegisterAlert").css("display", "none");
+                    }
+
+                });
+            });
+        });
+
+    </script>
+
+}
+
+<div class="alert alert-danger" role="alert" id="FaildRegisterAlert" style="display:none;">
+    Failed Register , please check your information 
+</div>
+
+<div class="alert alert-success" role="alert" id="SuccessfullyRegisterAlert" style="display:none;">
+    Your account has been created successfuly <a href="@Url.Action("Login","Auth")" class="alert-link">Login Now</a>
+</div>
+
+<div class="account-pages my-5 pt-sm-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" style="text-align:center;">
+                <h2>Complaint System</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card overflow-hidden">
+                    <div class="bg-soft-primary">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="text-primary p-4">
+                                    <h5 class="text-primary">Free Register</h5>
+                                    <p>Get your free account now.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="p-2">
+                            <form class="form-horizontal" id="SubmitForm">
+
+                                <div class="form-group">
+                                    <label for="useremail">User Name</label>
+                                    <input type="text" class="form-control" id="UserName" placeholder="Enter User Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Profile Type</label>
+                                    <select id="ProfileTypes" class="custom-select"></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username">Password</label>
+                                    <input type="password" class="form-control" id="Password" placeholder="Enter Password">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="userpassword">Confirm Password</label>
+                                    <input type="password" class="form-control" id="ConfirmPassword" placeholder="Confirm password">
+                                </div>
+
+                                <div class="mt-4">
+                                    <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Register</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                    <p>Already have an account ? <a href="@Url.Action("Login","Auth")" class="font-weight-medium text-primary"> Login</a> </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

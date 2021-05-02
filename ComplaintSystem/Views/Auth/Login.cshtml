@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_BlankLayout.cshtml";
+}
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            if (sessionStorage.getItem('UnAuthorizeAccess') != null) {
+                $("#UnAuthorizedAccessAlert").css("display", "block");
+                sessionStorage.removeItem('UnAuthorizeAccess');
+            }
+
+            $("#LoginForm").submit(function (event) {
+
+                event.preventDefault();
+                $.ajax({
+
+                    type: 'post',
+                    url: 'http://localhost:50893/token',
+                    data: {
+
+                        username: $("#username").val(),
+                        password: $("#userpassword").val(),
+                        grant_type:'password'
+                    },
+                    success: function (response) {
+
+                        sessionStorage.setItem('accessToken', response.access_token);
+                        sessionStorage.setItem('UserName', $("#username").val());
+
+                        $.ajax({
+                            type: 'get',
+                            url: "http://localhost:50893/api/ProfileApi/LoadProfile/" + $("#username").val() + "/" + $("#userpassword").val(),
+                            dataType: 'JSON',
+                            headers: {
+                                'Authorization': 'Bearer ' + sessionStorage.getItem('accessToken')
+                            },
+                            success: function (response1) {
+                                sessionStorage.setItem('ProfileTypeID', response1.ProfileTypeID);
+                                sessionStorage.setItem('ProfileID', response1.ID);
+                                if (sessionStorage.getItem('ProfileTypeID') == 1) {
+                                    window.location.href = "http://localhost:64323/Complaint/CustomerComplaint";
+                                } else {
+                                    window.location.href = "http://localhost:64323/Complaint/AdminComplaint";
+                                }
+                                
+                            },
+                            error: function (jqXHR) {
+                                if (jqXHR.status == "401") {
+                                    window.location.href = 'http://localhost:64323/Auth/Login';
+                                }
+                            }
+                        });              
+                    },
+                    error: function (jqXHR) {
+
+                        $("#ErrorCredentialAlert").css("display", "block");
+                    }
+                });
+            });
+        });
+        
+    </script>
+
+
+}
+
+<div class="alert alert-danger" role="alert" id="UnAuthorizedAccessAlert" style="display:none;">
+    Unauthorized Access
+</div>
+<div class="alert alert-danger" role="alert" id="ErrorCredentialAlert" style="display:none;">
+    User name or password incorrect
+</div>
+
+<div class="account-pages my-5 pt-sm-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" style="text-align:center;">
+                <h2>Complaint System</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card overflow-hidden">
+                    <div class="bg-soft-primary">
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="text-primary p-4">
+                                    <h5 class="text-primary">Welcome Back !</h5>
+                                    <p>Sign in to continue to</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="p-2">
+                            <form class="form-horizontal" id="LoginForm">
+
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="userpassword">Password</label>
+                                    <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
+                                </div>
+
+                                <div class="mt-3">
+                                    <button class="btn btn-primary btn-block waves-effect waves-light" type="submit" id="btnLogin">Log In</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                    <p>Don't have an account ? <a href="@Url.Action("Register","Auth")" class="font-weight-medium text-primary"> Signup now </a> </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
